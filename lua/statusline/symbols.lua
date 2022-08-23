@@ -1,0 +1,25 @@
+local symbols = {
+  left_semicircle = vim.g.statusline_disable_icons and "" or "",
+  right_semicircle = vim.g.statusline_disable_icons and "" or "",
+  left_upside_down_right_triangle = vim.g.statusline_disable_icons and "" or " ",
+  right_upside_down_right_triangle = vim.g.statusline_disable_icons and "" or " ",
+  left_arrow = vim.g.statusline_disable_icons and "" or "",
+  right_arrow = vim.g.statusline_disabled_icon and "" or "",
+  left_arrow_separator = "",
+  generic_separator = "|",
+  folder = "",
+  linux_logo = "",
+  darwin_logo = "",
+  windows_logo = "",
+  unknown_logo = " ",
+  logo = " ",
+  peacock = "🦚",
+  ln = "",
+  lsp_warnings_symbol = " ",
+  lsp_error_symbol = " ",
+  diff_add_symbol = "+",
+  diff_mod_symbol = "~",
+  diff_removed_symbol = "-",
+}
+
+return symbols

@@ -1,0 +1,5 @@
+The code in this directory is a carbon copy of my previous Neovim configuration's statusline which was tailored
+for the everforest colorscheme.
+
+As a result, migrating it to another theme may be difficult and tedious. I'm still working on a unified colorscheme
+manager so until that's released, you'll have to manually replace every value in `statusline/colors.lua`
