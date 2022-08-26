@@ -14,14 +14,17 @@ return require("packer").startup(function(use)
   }
 
   use {
+    'terrortylor/nvim-comment',
+    config = function() require('nvim_comment').setup() end
+  }
+
+  use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons',
       'Iron-E/nvim-cartographer' -- probably superfluous
     },
     tag = 'nightly',
-    --opt = true,
-    --module = 'nvim-tree'
   }
 
   use {
@@ -179,4 +182,6 @@ return require("packer").startup(function(use)
     opt = true,
     cmd = { "NnnPicker" }
   }
+
+  use_rocks 'lpeg'
 end)

@@ -84,12 +84,12 @@ M.get_operating_system = function()
     end
   end
 
-  concat = _get_os_icon(_OPERATING_SYSTEM)
+  local concat = _get_os_icon(_OPERATING_SYSTEM)
 
   if vim.g.statusline_disable_icons then
     concat = "  " .. concat .. "  "
   end
-  
+
   return concat
 end
 
@@ -104,6 +104,36 @@ M.split = function(inputstr, sep)
   end
 
   return t
+end
+
+
+M.compile_pattern = function(variable)
+  local _get_next_pos = function(i, capital)
+    local unadulterated, _ = string.gsub(variable, "%b[]", "")
+    local _, loc = string.find(unadulterated, capital)
+    return loc + 4 * (i - 1) -- offset for the already compiled letters
+  end
+
+  local i = 0
+
+  for capital in string.gmatch(variable, "[A-Z]") do
+    i = i + 1
+
+    local loc = _get_next_pos(i, capital)
+
+    if i ~= 1 or string.find(variable:sub(0, loc - 1), "[A-Z]") then
+      variable = variable:sub(0, loc - 1) .. "_?" .. variable:sub(loc, variable:len())
+    end
+
+    -- variable was altered so we need to update position
+    loc = _get_next_pos(i, capital)
+
+    variable = variable:sub(0, loc - 1) ..
+        string.gsub(variable:sub(loc, loc + 1), "[A-Z]", "[" .. capital:lower() .. capital .. "]") ..
+        variable:sub(loc + 2, variable:len())
+  end
+
+  return variable
 end
 
 return M

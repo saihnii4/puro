@@ -4,6 +4,34 @@ local constants = require("statusline.constants")
 
 local M = {}
 
+M.register_component = function(component_name, component)
+  local compiled_name = util.compile_pattern(component_name)
+  M[compiled_name] = {}
+  M[compiled_name][component_name] = component
+end
+
+M.list_components = function(opts)
+  if not opts then
+    opts = { include_mangled = false }
+  end
+
+  local components = {}
+
+  for k, v in pairs(M) do
+    if type(v) == "table" then
+      for k2, _v2 in pairs(v) do
+        if opts.include_mangled then
+          table.insert(components, { k, k2 })
+        else
+          table.insert(components, k2)
+        end
+      end
+    end
+  end
+
+  return components
+end
+
 M.Refreshes = {
   Refreshes = {
     provider = constants.refreshes_provider,
@@ -14,7 +42,7 @@ M.Refreshes = {
 M.StartPadding = {
   StartPadding = {
     provider = util.spacing,
-    highlight = {colors.black, colors.black}
+    highlight = { colors.black, colors.black }
   }
 }
 
@@ -176,14 +204,16 @@ M.Logo = {
   }
 }
 
-M.Workspace = {
-  Workspace = {
-    provider = constants.workspace_provider,
-    highlight = constants.workspace_highlight,
-    separator = constants.workspace_separator,
-    separator_highlight = constants.workspace_separator_highlight
+M.Workspace = function(truncate)
+  return {
+    Workspace = {
+      provider = constants.workspace_provider(truncate),
+      highlight = constants.workspace_highlight,
+      separator = constants.workspace_separator,
+      separator_highlight = constants.workspace_separator_highlight
+    }
   }
-}
+end
 
 M.OperatingSystem = {
   OperatingSystem = {
@@ -234,4 +264,14 @@ M.MinifiedMetaPadding = {
   }
 }
 
-return M
+return setmetatable(M, {
+  __index = function(t, i)
+    for k, v in pairs(t) do
+      if string.find(i, k) then
+        return v
+      end
+    end
+
+    return nil
+  end,
+})

@@ -4,6 +4,7 @@ require("packages")
 -- TODO: Give autocmds their own separate file
 
 require("lsp")
+require("statusline")
 require("maps")
 
 vim.api.nvim_create_autocmd(

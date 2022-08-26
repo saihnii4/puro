@@ -1,15 +1,21 @@
 local lsp = require 'lspconfig'
 local map = require 'cartographer'
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local merge = function(t1, t2)
+  for i, val in ipairs(t1) do
+    table.insert(t2, val)
+  end
+  return t2
+end
 
 local config = {
   sumneko_lua = {
     settings = {
       Lua = {
         runtime = {
-          version = "Lua 5.4.4",
+          version = "Lua 5.4",
           path = {
             '?.lua',
             '?/init.lua',
@@ -18,19 +24,21 @@ local config = {
             '/usr/share/5.4/?.lua',
             '/usr/share/lua/5.4/?/init.lua'
           }
+        },
+        cmd = { "/usr/bin/lua-language-server", "-E", "/usr/lib/lua-language-server" },
+        diagnostics = {
+          globals = { "vim" },
+          unusedLocalExclude = { "_*" }
+        },
+        workspace = {
+          library = merge(vim.api.nvim_get_runtime_file("", true), {
+            vim.fn.expand '~/.luarocks/share/lua/5.4',
+          })
+        },
+        telemetry = {
+          enable = false
         }
       }
-    },
-    --cmd = { vim.g.HOME .. ".local/bin/lua-language-server", "-E", vim.g.HOME .. ".local/lib/lua-language-server" },
-    cmd = { "/usr/bin/lua-language-server", "-E", "/usr/lib/lua-language-server" },
-    diagnostics = {
-      globals = { "vim" }, unusedLocalExclude = { "_*" }
-    },
-    workspace = {
-      library = vim.api.nvim_get_runtime_file("", true)
-    },
-    telemetry = {
-      enable = false
     }
   },
   purescriptls = {
@@ -44,9 +52,8 @@ local config = {
   gopls = true,
   hls = {
     on_attach = function()
-      print("Hello World")
       map.n.nore.silent['<Leader>h'] = function() (require 'notify')('TODO: load Haskell REPL') end -- TODO: load Haskell REPL
-    end
+    end,
   },
   ccls = true,
 }

@@ -1,13 +1,11 @@
 local gl = require("galaxyline")
 local components = require("statusline.components")
 
-gl.short_line_list = {" "}
+gl.short_line_list = { " " }
 
 local left_section = {
   vim.g.statusline_disable_icons and nil or components.LeftSpace,
   vim.g.statusline_disable_icons and nil or components.LeftPadding,
-  components.Logo,
-  components.StartPadding,
   components.EmptyBuffer,
   components.MinifiedMetaPadding,
   components.FileIcon,
@@ -29,12 +27,28 @@ end
 
 gl.section.left = left_section
 
+gl.section.short_line_left = {
+  vim.g.statusline_disable_icons and nil or components.LeftSpace,
+  vim.g.statusline_disable_icons and nil or components.LeftPadding,
+  components.StartPadding,
+  components.EmptyBuffer,
+  components.MinifiedMetaPadding,
+  components.FileIcon,
+  components.FileName,
+  components.LeftCursorIcon,
+  components.LeftCursorPosition,
+}
+
+gl.section.short_line_right = {
+  components.Workspace(false)
+}
+
 if vim.g.corporate_marketing == 1 then
-  gl.section.mid = {components.Branding}
+  gl.section.mid = { components.Branding }
 end
 
 gl.section.right = {
-  components.Workspace,
+  components.Workspace(true),
   components.ViMode,
   components.RightCursorIcon,
   components.RightCursorPosition,
