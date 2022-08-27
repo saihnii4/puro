@@ -30,16 +30,13 @@ gl.section.left = left_section
 gl.section.short_line_left = {
   vim.g.statusline_disable_icons and nil or components.LeftSpace,
   vim.g.statusline_disable_icons and nil or components.LeftPadding,
-  components.StartPadding,
+  --components.StartPadding,
   components.EmptyBuffer,
   components.MinifiedMetaPadding,
   components.FileIcon,
   components.FileName,
   components.LeftCursorIcon,
   components.LeftCursorPosition,
-}
-
-gl.section.short_line_right = {
   components.Workspace(false)
 }
 

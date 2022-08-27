@@ -106,7 +106,6 @@ M.split = function(inputstr, sep)
   return t
 end
 
-
 M.compile_pattern = function(variable)
   local _get_next_pos = function(i, capital)
     local unadulterated, _ = string.gsub(variable, "%b[]", "")
@@ -129,8 +128,8 @@ M.compile_pattern = function(variable)
     loc = _get_next_pos(i, capital)
 
     variable = variable:sub(0, loc - 1) ..
-        string.gsub(variable:sub(loc, loc + 1), "[A-Z]", "[" .. capital:lower() .. capital .. "]") ..
-        variable:sub(loc + 2, variable:len())
+        string.gsub(variable:sub(loc, loc), "[A-Z]", "[" .. capital:lower() .. capital .. "]") ..
+        variable:sub(loc + 1, variable:len())
   end
 
   return variable
