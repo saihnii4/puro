@@ -37,10 +37,8 @@ gl.section.short_line_left = {
   components.EmptyBuffer,
   components.MinifiedMetaPadding,
   components.FileIcon,
-  components.FileName,
-  components.LeftCursorIcon,
-  components.LeftCursorPosition,
-  components.Workspace(false)
+  components.FileName
+  --components.FileName(false),
 }
 
 if vim.g.corporate_marketing == 1 then
@@ -53,6 +51,5 @@ gl.section.right = {
   components.RightCursorIcon,
   components.RightCursorPosition,
   components.LinePercentage,
-  components.OperatingSystem,
   components.RightPadding
 }

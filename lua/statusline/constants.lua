@@ -225,16 +225,16 @@ local constants = {
 
     if not truncate then
       return function()
-        return " " .. symbols.folder .. " " .. dir_name
+        return dir_name
       end
     end
 
     return function()
       local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
       if dir_name:len() > 14 then
-        return "  " .. symbols.folder .. " " .. dir_name:sub(0, 12) .. "... "
+        return "  " .. dir_name:sub(0, 12) .. "... "
       end
-      return "  " .. symbols.folder .. " " .. dir_name .. " "
+      return "  " .. dir_name
     end
   end,
   workspace_highlight = { colors.white, colors.black },

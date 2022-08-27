@@ -4,12 +4,22 @@ local constants = require("statusline.constants")
 
 local M = {}
 
-M.register_component = function(component_name, component)
+M.register_component = function(component_name, _component)
+  local _meta = {
+    __call = function(t, name, ...)
+      -- TODO: bind curried provider
+      --return t.provider[name](...)
+    end
+  }
+
   local compiled_name = util.compile_pattern(component_name)
-  if type(component) ~= "table" then
-    M[compiled_name] = component
+
+  if type(_component) ~= "table" then
+    M[compiled_name] = _component
     return
   end
+
+  local component = setmetatable(_component, _meta)
 
   M[compiled_name] = {}
   M[compiled_name][component_name] = component
