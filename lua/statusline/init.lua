@@ -6,6 +6,7 @@ gl.short_line_list = { " " }
 local left_section = {
   vim.g.statusline_disable_icons and nil or components.LeftSpace,
   vim.g.statusline_disable_icons and nil or components.LeftPadding,
+  components.StartPadding,
   components.EmptyBuffer,
   components.MinifiedMetaPadding,
   components.FileIcon,
@@ -27,10 +28,12 @@ end
 
 gl.section.left = left_section
 
+-- It's recommended to keep the statusline loaded for inactive buffers as a preventative measure
+-- against flickering
 gl.section.short_line_left = {
   vim.g.statusline_disable_icons and nil or components.LeftSpace,
   vim.g.statusline_disable_icons and nil or components.LeftPadding,
-  --components.StartPadding,
+  components.StartPadding,
   components.EmptyBuffer,
   components.MinifiedMetaPadding,
   components.FileIcon,

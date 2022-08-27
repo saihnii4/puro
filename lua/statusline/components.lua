@@ -7,8 +7,8 @@ local M = {}
 M.register_component = function(component_name, component)
   local compiled_name = util.compile_pattern(component_name)
   if type(component) ~= "table" then
-	  M[compiled_name] = component
-	  return
+    M[compiled_name] = component
+    return
   end
 
   M[compiled_name] = {}
@@ -129,15 +129,13 @@ M.register_component("LeftCursorIcon", {
   highlight = constants.left_cursor_icon_highlight
 })
 
-M.RightCursorIcon = {
-  RightCursorIcon = {
-    provider = constants.right_cursor_icon_provider,
-    condition = constants.right_cursor_icon_condition,
-    highlight = constants.right_cursor_icon_highlight,
-    separator = constants.right_cursor_icon_separator,
-    separator_highlight = constants.right_cursor_icon_separator_highlight
-  }
-}
+M.register_component("RightCursorIcon", {
+  provider = constants.right_cursor_icon_provider,
+  condition = constants.right_cursor_icon_condition,
+  highlight = constants.right_cursor_icon_highlight,
+  separator = constants.right_cursor_icon_separator,
+  separator_highlight = constants.right_cursor_icon_separator_highlight
+})
 
 M.register_component("LeftCursorPosition", {
   provider = constants.left_cursor_position_provider,
@@ -179,19 +177,17 @@ M.register_component("Workspace", function(truncate)
 end)
 
 M.register_component("OperatingSystem", {
-  OperatingSystem = {
-    provider = constants.operating_system_provider,
-    condition = constants.operating_system_condition,
-    highlight = constants.operating_system_highlight,
-    separator = constants.operating_system_separator,
-    separator_highlight = constants.operating_system_separator_highlight
-  }
+  provider = constants.operating_system_provider,
+  condition = constants.operating_system_condition,
+  highlight = constants.operating_system_highlight,
+  separator = constants.operating_system_separator,
+  separator_highlight = constants.operating_system_separator_highlight
 })
 
 M.register_component("LeftPadding", {
-    provider = constants.left_padding_provider,
-    highlight = constants.left_padding_highlight,
-    condition = constants.left_padding_condition
+  provider = constants.left_padding_provider,
+  highlight = constants.left_padding_highlight,
+  condition = constants.left_padding_condition
 })
 
 M.register_component("RightPadding", {
@@ -220,11 +216,16 @@ M.register_component("MinifiedMetaPadding", {
 return setmetatable(M, {
   __index = function(t, i)
     for k, v in pairs(t) do
-    	local start, end = unpack(string.find(i, k))
-	if (start == 1) and (end == i:len()) then
-		return v
-	end
+      local start, _end = string.find(i, k)
+      -- ensure exact match
+      if (start == 1) and (_end == i:len()) then
+        return v
+      end
     end
+
+    vim.notify(string.format('Component "%s" does not match any registered component', i), vim.log.levels.WARN,
+      { title = "statusline/components.lua" })
+
     return nil
   end,
 })

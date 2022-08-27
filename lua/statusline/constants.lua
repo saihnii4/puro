@@ -225,7 +225,7 @@ local constants = {
 
     if not truncate then
       return function()
-        return "  " .. symbols.folder .. " " .. dir_name
+        return " " .. symbols.folder .. " " .. dir_name
       end
     end
 

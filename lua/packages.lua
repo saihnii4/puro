@@ -182,6 +182,4 @@ return require("packer").startup(function(use)
     opt = true,
     cmd = { "NnnPicker" }
   }
-
-  use_rocks 'lpeg'
 end)
