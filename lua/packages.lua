@@ -13,6 +13,8 @@ return require("packer").startup(function(use)
     end
   }
 
+  use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
+
   use {
     'terrortylor/nvim-comment',
     config = function() require('nvim_comment').setup() end

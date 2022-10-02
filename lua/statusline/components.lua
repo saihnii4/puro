@@ -7,6 +7,9 @@ local M = {}
 M.register_component = function(component_name, _component)
   local _meta = {
     __call = function(t, name, ...)
+      print(vim.inspect(t))
+      print(name)
+
       -- TODO: bind curried provider
       --return t.provider[name](...)
     end
@@ -224,6 +227,11 @@ M.register_component("MinifiedMetaPadding", {
 })
 
 return setmetatable(M, {
+  __call = function(t, name, ...)
+    print(vim.inspect(t))
+    print(name)
+    print(vim.inspect(...))
+  end,
   __index = function(t, i)
     for k, v in pairs(t) do
       local start, _end = string.find(i, k)
