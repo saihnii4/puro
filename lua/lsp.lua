@@ -2,6 +2,10 @@ local lsp = require 'lspconfig'
 local map = require 'cartographer'
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local _js_attach = function()
+end
 
 local merge = function(t1, t2)
   for i, val in ipairs(t1) do
@@ -56,12 +60,32 @@ local config = {
     end,
   },
   ccls = true,
+  diagnosticls = {
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    on_attach = function()
+      map.n.silent['<Leader>p'] = _js_attach
+    end,
+  },
+  tsserver = {
+    on_attach = function()
+      map.n.silent['<Leader>p'] = _js_attach
+    end,
+  },
+  emmet_ls = {
+    filetypes = { "html", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    init_options = {
+      html = {
+        options = {
+          ["jsx.enabled"] = true,
+        }
+      }
+    }
+  }
 }
 
+lsp["capabilities"] = capabilities
 
 for k, v in pairs(config) do
-  lsp["capabilities"] = capabilities
-
   if type(v) ~= "boolean" then
     lsp[k].setup(v)
     goto continue

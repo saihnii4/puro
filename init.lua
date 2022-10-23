@@ -2,7 +2,6 @@ require("vars")
 require("packages")
 
 -- TODO: Give autocmds their own separate file
-
 require("lsp")
 require("statusline")
 require("maps")
@@ -10,7 +9,7 @@ require("maps")
 vim.api.nvim_create_autocmd(
   { "FileType" },
   {
-    pattern = { "lua", "javascript", "json", "purescript" },
+    pattern = { "lua", "javascript", "json", "purescript", "javascriptreact", "typescript", "typescriptreact" },
     callback = function()
       vim.o.expandtab = true
       vim.o.tabstop = 2
@@ -34,3 +33,4 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.o.relativenumber = true
+vim.o.mouse = "a"

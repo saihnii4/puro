@@ -1,5 +1,8 @@
 return require("packer").startup(function(use)
   use 'wbthomason/packer.nvim'
+
+  use '/home/pur0/Code/lua-interface'
+
   use {
     '/home/pur0/Code/everforest',
     --'saihnii4/everforest',
@@ -134,11 +137,12 @@ return require("packer").startup(function(use)
     },
     config = function()
       local cmp = require 'cmp'
+      local luasnip = require 'luasnip'
 
       cmp.setup {
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({

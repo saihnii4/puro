@@ -14,6 +14,7 @@ map.n.nore.silent['<Leader>r'] = function(...) commands.load_command("rename", .
 map.n.nore.silent['<C-j>'] = function(...) commands.load_command("diagnostic_jump_next", ...) end
 map.n.nore.silent['<C-k>'] = function(...) commands.load_command("diagnostic_jump_prev", ...) end
 map.n.silent['<Leader>p'] = vim.lsp.buf.formatting
+map.n.nore.silent['<Leader>d'] = vim.lsp.buf.definition
 
 
 tree.setup(vim.g.nvimtree_config or {})
